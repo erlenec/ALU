@@ -7,7 +7,7 @@ module compare (
   ) {
   
   always {
-    case (alufn_signal[2:1]) {
+    case (alufn_signal[4:1]) {
       default: out = 16b0;
       b1001: out = 16b0 + z;
       b1010: out = 16b0 + (n ^ v);
