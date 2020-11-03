@@ -1,6 +1,6 @@
 module shifter (
     input a[16],
-    input b[4],
+    input b[4], //b takes in 4 bits
     input alufn_signal[6],
     output out[16]
   ) {

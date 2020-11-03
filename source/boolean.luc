@@ -2,7 +2,7 @@ module boolean (
     input a[16],
     input b[16],
     input alufn_signal[6],
-    output out[16]
+    output out[16] //output 16 bit boolean
   ) {
 
   

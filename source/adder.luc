@@ -1,8 +1,8 @@
 module adder (
-    input a[16],
-    input b[16],
-    input alufn_signal[6],
-    output out[16],
+    input a[16], //first input 
+    input b[16], //second input
+    input alufn_signal[6], //alufn 6 bits input
+    output out[16], //16 bit output
     output z[1],
     output v[1],
     output n[1]
