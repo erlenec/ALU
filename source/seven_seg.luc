@@ -16,6 +16,5 @@ module seven_seg (
     8: segs = 7b1111111;
     9: segs = 7b1100111;
     default: segs = 7b0000000; //if char is invalid, all segments will be off
-    out = 0;
   }
 }
