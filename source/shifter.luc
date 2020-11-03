@@ -6,11 +6,11 @@ module shifter (
   ) {
 
   always {
-  case (alufn_signal){
+   case (alufn_signal){
     default: out = a;
-    b1000: out = a << b;
-    b1001: out = a >> b;
-    b1011: out = $signed(a) >>> b;
+    b100000: out = a << b;
+    b100001: out = a >> b;
+    b100011: out = $signed(a) >>> b;
     }
   }
 }
