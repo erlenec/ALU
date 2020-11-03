@@ -7,6 +7,7 @@
     <src top="true">au_top.luc</src>
     <src>shifter.luc</src>
     <src>seven_seg.luc</src>
+    <src>digit.luc</src>
     <component>button_conditioner.luc</component>
     <component>pipeline.luc</component>
     <src>boolean.luc</src>
@@ -14,6 +15,7 @@
     <component>counter.luc</component>
     <component>edge_detector.luc</component>
     <src>adder.luc</src>
+    <src>alu.luc</src>
     <src>button.luc</src>
     <constraint lib="true">au.xdc</constraint>
     <constraint lib="true">alchitry.acf</constraint>

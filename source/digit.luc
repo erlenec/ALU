@@ -1,0 +1,11 @@
+module digit (
+    input in[2],  
+    output out[4]
+  ) {
+
+  always {
+    out = 4b1111;
+    case(in){
+    
+  }
+}
