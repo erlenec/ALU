@@ -7,12 +7,11 @@ module compare (
   ) {
   
   always {
-    out = 16b0;
-    case (alufn_signal) {
-      default: out[0] = 0;
-      b110011: out[0] = z;
-      b110101: out[0] = n ^ v;
-      b110111: out[0] = z | (n ^ v);
+    case (alufn_signal[2:1]) {
+      b1001: out = 16b0 + z;
+      b1010: out = 16b0 + (n ^ v);
+      b1011: out = 16b0 + (z | (n ^ v));
+      default: out = 16b0;
     }
   }
 }
