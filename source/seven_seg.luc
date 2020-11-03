@@ -5,16 +5,24 @@ module seven_seg (
 
   always {
     case(char){
-    0: segs = 7b0111111;
-    1: segs = 7b0000110;
-    2: segs = 7b1011011;
-    3: segs = 7b1001111;
-    4: segs = 7b1100110;
-    5: segs = 7b1101101;
-    6: segs = 7b1111101;
-    7: segs = 7b0000111;
-    8: segs = 7b1111111;
-    9: segs = 7b1100111;
+    h00: segs = 7b0111111;  //0
+    h01: segs = 7b0000110;  //1
+    h02: segs = 7b1011011;  //2
+    h03: segs = 7b1001111;  //3 
+    h04: segs = 7b1100110;  //4 
+    h05: segs = 7b1101101;  //5
+    h06: segs = 7b1111101;  //6
+    h07: segs = 7b0000111;  //7 
+    h08: segs = 7b1111111;  //8 
+    h09: segs = 7b1100111;  //9
+    h0A: segs = 7b1110111; //A 
+    h0B: segs = 7b1111100; //small letter b 
+    h0C: segs = 7b0111001; //C 
+    h0D: segs = 7b1011110; //small letter d 
+    h0F: segs = 7b1111001; //E 
+    h10: segs = 7b1010000; //small letter r 
+    h11: segs = 7b1010100; //small letter n 
+    h12: segs = 7b1101101; //S 
     default: segs = 7b0000000; //if char is invalid, all segments will be off
   }
 }
