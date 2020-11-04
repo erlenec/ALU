@@ -3,7 +3,11 @@ module alu (
     input b[16], //second input 
     input alufn_signal[6], //alufn 6 bits input
     output out[16], //16 bit output 
-    output zvn[3]
+    output zvn[3],
+    //output z[1],
+    //output v[1],
+    //output n[1],
+    output overflow
   ) {
   
   adder adderUnit;
@@ -15,6 +19,7 @@ module alu (
   sig z;
   sig v;
   sig n;
+  sig ovf;
   
   
   always {
@@ -22,10 +27,13 @@ module alu (
     adderUnit.alufn_signal = alufn_signal;
     adderUnit.a = a;
     adderUnit.b = b;
+    ovf = adderUnit.v;
+    
     
     z = adderUnit.z;
     v = adderUnit.v;
     n = adderUnit.n; 
+    overflow = adderUnit.v;
     
     zvn[0] = z;
     zvn[1] = v;
