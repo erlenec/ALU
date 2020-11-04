@@ -40,7 +40,7 @@ module au_top (
   sig aluselect[6]; //record alufn_signal
   alu f;
   adder add;
-  tester autotest(.clk(clk), .rst(rst), .pause(io_dip[2][6]), .restarttest(io_button[1]));
+  tester autotest(.clk(clk), .rst(rst), .pause(io_dip[2][6]), .restarttest(io_button[4]));
   
   
   always {
