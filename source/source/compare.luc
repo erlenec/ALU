@@ -3,10 +3,8 @@ module compare (
     input v,
     input n,
     input alufn_signal[6],
-    output cmp[16] 
+    output out[16] 
   ) {
-  
-  sig out; 
   
   always {
     case (alufn_signal[2:1]) {
@@ -18,8 +16,5 @@ module compare (
       //if looking for less than or equals comparison
       b1011: out = 16b0 + (z | (n ^ v)); //output plus z or (n xor v)
     }
-    
-    cmp[15:1] = 15b0;
-    cmp[0] = out;
   }
 }

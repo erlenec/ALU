@@ -5,10 +5,10 @@
     <src>testALU.luc</src>
     <component>decoder.luc</component>
     <src>multi_seven_seg.luc</src>
+    <src>tester.luc</src>
     <src top="true">au_top.luc</src>
     <src>shifter.luc</src>
     <src>seven_seg.luc</src>
-    <src>digit.luc</src>
     <component>button_conditioner.luc</component>
     <component>pipeline.luc</component>
     <src>boolean.luc</src>
@@ -18,6 +18,8 @@
     <component>edge_detector.luc</component>
     <src>adder.luc</src>
     <src>alu.luc</src>
+    <src>number_ctr.luc</src>
+    <src>multi_num_ctr.luc</src>
     <src>button.luc</src>
     <src>multiplier.luc</src>
     <constraint lib="true">au.xdc</constraint>

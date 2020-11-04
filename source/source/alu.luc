@@ -4,9 +4,6 @@ module alu (
     input alufn_signal[6], //alufn 6 bits input
     output out[16], //16 bit output 
     output zvn[3],
-    //output z[1],
-    //output v[1],
-    //output n[1],
     output overflow
   ) {
   
