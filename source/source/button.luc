@@ -1,0 +1,47 @@
+module button (
+    input clk,  // clock
+    input io_button[5], //takes in 5 buttons as input
+    output inputone,
+    output inputzero,
+    output nextvalue,
+    output prevvalue,
+    output enter
+  ) {
+  
+  .clk(clk){
+    button_conditioner middle;
+    edge_detector middle_button(#RISE(1), #FALL(0));
+    button_conditioner up;
+    edge_detector up_button(#RISE(1), #FALL(0));
+    button_conditioner down; 
+    edge_detector down_button(#RISE(1), #FALL(0));
+    button_conditioner right;
+    edge_detector right_button(#RISE(1), #FALL(0));
+    button_conditioner left;
+    edge_detector left_button(#RISE(1), #FALL(0));
+  }
+  
+  always {
+    //up button
+    up.in = io_button[0];
+    up_button.in = up.out;
+    inputone = up_button.out;
+    //middle button
+    middle.in = io_button[1];
+    middle_button.in = middle.out;
+    enter = middle_button.out;
+    //down button  
+    down.in = io_button[2];
+    down_button.in = down.out;
+    nextvalue = down_button.out;
+    //left button  
+    left.in = io_button[3];
+    left_button.in = left.out;
+    prevvalue = left_button.out;
+    //right button  
+    right.in = io_button[4];
+    right_button.in = right.out;
+    inputzero = right_button.out;
+    
+  }
+}
