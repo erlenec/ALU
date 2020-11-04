@@ -20,7 +20,7 @@ module adder (
     }
     
     n = s[15];
-    v = (a[15] & (b[15] ^ alufn_signal[0]) & !s[15]) | (!a[15] & !(b[15] ^ alufn_signal[0]) & s[15]); 
+    v = (a[15] & (b[15] ^ alufn_signal[0]) & ~s[15]) | (~a[15] & ~(b[15] ^ alufn_signal[0]) & s[15]); 
     z = ~|s;
     out = s;
     
