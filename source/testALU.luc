@@ -1,10 +1,14 @@
 module testALU (
     input clk,  // clock
-    input reset,  
+    input reset,   
+    //input next_state, //to start next state
+    //input button, //used to start testing
     output out[6] // alufn signals
+   
   ) {
   
    .clk(clk){
+    //all states to be checked
     fsm testAluFsm={ADD, SUB, AND, OR, XOR, A, SHL, SHR, SRA, CMPEQ, CMPLT, CMPLE}; 
   }
 

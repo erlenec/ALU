@@ -1,0 +1,78 @@
+module alu (
+    input a[16], //first input 
+    input b[16], //second input 
+    input alufn_signal[6], //alufn 6 bits input
+    output out[16], //16 bit output 
+    output zvn[3],
+    //output z[1],
+    //output v[1],
+    //output n[1],
+    output overflow
+  ) {
+  
+  adder adderUnit;
+  boolean booleanUnit;
+  shifter shifterUnit;
+  compare compareUnit; 
+  //multiplier multiplierUnit;
+  
+  sig z;
+  sig v;
+  sig n; 
+  sig ovf;
+  
+  
+  always {
+    
+    adderUnit.alufn_signal = alufn_signal;
+    adderUnit.a = a;
+    adderUnit.b = b;
+    ovf = adderUnit.v;
+    
+    
+    z = adderUnit.z;
+    v = adderUnit.v;
+    n = adderUnit.n; 
+    overflow = adderUnit.v;
+    
+    zvn[0] = z;
+    zvn[1] = v;
+    zvn[2] = n;
+     
+    
+    compareUnit.alufn_signal = alufn_signal;
+    compareUnit.z = z;
+    compareUnit.v = v;
+    compareUnit.n = n;
+    
+    booleanUnit.alufn_signal = alufn_signal;
+    booleanUnit.a = a;
+    booleanUnit.b = b;
+    
+    shifterUnit.alufn_signal = alufn_signal;
+    shifterUnit.a = a;
+    shifterUnit.b = b[3:0];
+    
+    //multiplierUnit.alufn_signal = alufn_signal;
+    //multiplierUnit.a = a;
+    //multiplierUnit.b = b;
+    
+    case(alufn_signal[5:4]){
+      b00 : out = adderUnit.out;
+      b01 : out = booleanUnit.out;
+      b10 : out = shifterUnit.out;
+      b11 : out = compareUnit.cmp;
+      
+      default: out = 16b0;
+    }
+      
+    if (alufn_signal == b000010){
+      out = a*b; // fast multiplier hack
+    }
+    
+    //else{
+      //out = multiplierUnit.out;
+    
+    
+  }
+}

@@ -2,7 +2,7 @@ module boolean (
     input a[16],
     input b[16],
     input alufn_signal[6],
-    output out[16]
+    output out[16] //output 16 bit boolean
   ) {
 
   
@@ -11,7 +11,7 @@ module boolean (
     case(alufn_signal[3:0]){
     
       b1000: out = a & b; //AND
-      b1001: out = ~(a & b); //NAND
+      b1001: out = ~(a & b); //NAND cannot 
   
       b1110: out = a | b; //OR
       b1111: out = ~(a | b); //NOR 

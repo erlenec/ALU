@@ -3,16 +3,21 @@ module compare (
     input v,
     input n,
     input alufn_signal[6],
-    output out[16] 
+    output cmp[16] 
   ) {
   
+  sig out; 
+  
   always {
-    out = 16b0;
-    case (alufn_signal) {
-      default: out[0] = 0;
-      b110011: out[0] = z;
-      b110101: out[0] = n ^ v;
-      b110111: out[0] = z | (n ^ v);
+
+    case (alufn_signal[2:1]) {
+      default: out = b0; 
+      b01: out = z; //a = b
+      b10: out = n ^ v; //a<b
+      b11: out = z | (n ^ v); //a<=b
     }
+    
+    cmp[15:1] = 15b0;
+    cmp[0] = out;
   }
 }
