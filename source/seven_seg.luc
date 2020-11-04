@@ -1,5 +1,5 @@
 module seven_seg (
-    input char[4],
+    input char[5],
     output segs[7]  //7 segment LED output
   ) {
 
