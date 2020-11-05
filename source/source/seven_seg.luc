@@ -1,5 +1,5 @@
 module seven_seg (
-    input char[5],
+    input char[5], //5 bit input so there are enough bits to show the numbers and letters below
     output segs[7]  //7 segment LED output
   ) {
 
