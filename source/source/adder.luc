@@ -20,7 +20,7 @@ module adder (
     }
     
     n = s[15];                                                      //calculate n
-    v = (a[15] & b[15] & ~s[15]) | (~a[15] & ~b[15] & s[15]);       //calcultae v 
+    v = (a[15] & b[15] & ~s[15]) | (~a[15] & ~b[15] & s[15]);       //calculate v 
     z = ~|s;                                                        //calculate z
     out = s;
   }
