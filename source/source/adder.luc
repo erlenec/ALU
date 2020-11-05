@@ -1,11 +1,11 @@
 module adder (
-    input a[16], //first input 
-    input b[16], //second input
-    input alufn_signal[6], //alufn 6 bits input
-    output out[16], //16 bit output
-    output z[1],
-    output v[1],
-    output n[1]
+    input a[16],             //first input 
+    input b[16],             //second input
+    input alufn_signal[6],   //6 bits alufn input
+    output out[16],          //16 bits output
+    output z[1],             //z output
+    output v[1],             //v output
+    output n[1]              //n output
   ) {
   
   sig s[16];
@@ -14,15 +14,14 @@ module adder (
     s = 16b0;
     
     case(alufn_signal[0]){
-      0: s = a+b;
-      1: s = a-b;
+      0: s = a+b;              //addition
+      1: s = a-b;              //subtraction
       default: s = 16b0;
     }
     
-    n = s[15];
-    v = (a[15] & (b[15] ^ alufn_signal[0]) & !s[15]) | (!a[15] & !(b[15] ^ alufn_signal[0]) & s[15]); 
-    z = ~|s;
+    n = s[15];                                                      //calculate n
+    v = (a[15] & b[15] & ~s[15]) | (~a[15] & ~b[15] & s[15]);       //calcultae v 
+    z = ~|s;                                                        //calculate z
     out = s;
-    
   }
 }

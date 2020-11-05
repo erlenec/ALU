@@ -1,16 +1,16 @@
 module shifter (
-    input a[16],
-    input b[4], //b takes in 4 bits
-    input alufn_signal[6],
-    output out[16]
+    input a[16],                //input a
+    input b[4],                 //b takes in 4 bits
+    input alufn_signal[6],      //6 bits alufn input
+    output out[16]              //16 bits output
   ) {
 
   always {
-  case (alufn_signal){
+  case (alufn_signal[3:0]){
     default: out = a;
-    b1000: out = a << b;
-    b1001: out = a >> b;
-    b1011: out = $signed(a) >>> b;
+    b1000: out = a << b;                //SHL
+    b1001: out = a >> b;                //SHR
+    b1011: out = $signed(a) >>> b;      //SRA
     }
   }
 }

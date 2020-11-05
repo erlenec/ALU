@@ -4,6 +4,9 @@ module alu (
     input alufn_signal[6], //alufn 6 bits input
     output out[16], //16 bit output 
     output zvn[3],
+    //output z[1],
+    //output v[1],
+    //output n[1],
     output overflow
   ) {
   
@@ -15,7 +18,7 @@ module alu (
   
   sig z;
   sig v;
-  sig n;
+  sig n; 
   sig ovf;
   
   
@@ -58,7 +61,8 @@ module alu (
       b00 : out = adderUnit.out;
       b01 : out = booleanUnit.out;
       b10 : out = shifterUnit.out;
-      b11 : out = compareUnit.out;
+      b11 : out = compareUnit.cmp;
+      
       default: out = 16b0;
     }
       

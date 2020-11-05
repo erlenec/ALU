@@ -1,0 +1,133 @@
+module testerfsm (
+    input clk,
+    input rst,
+    input pause,
+    input restart,
+    output out[4][5]
+  ) {
+
+
+
+// instantiate the alu to check its output against test case
+  const CLKSPEED = 30; // speed of update for 26 is approx 1.34s
+  dff counter[CLKSPEED](.clk(clk), .rst(rst)); // create counter as clk
+
+
+  alu alu; // instantiate alu for checking logic of program against predefined assertions
+  .clk(counter.q[CLKSPEED-1]){ //set fsm speed to counter
+    fsm state(.rst(rst)) = {START, ADD, SUB, AND, NAND, OR, NOR, XOR, XNOR, A, SHL, SHR, SRA, CMPEQ, CMPLT, CMPLE, MULTIPLY, MOD, END}; // create states for testing each of the fsm.
+  }
+
+  always {
+    // to increment counter
+    counter.d = counter.q + 1;
+    // Test cases
+
+    case(state.q){
+      state.START:
+        alu.alufn_signal=0;
+        out = {5d0,5d0,5d0,5d0};
+        alu.a = 16b0;
+        alu.b = 16b0;
+        
+        if (restart == 1){ 
+          state.d = state.ADD;
+        }
+          
+      state.ADD: 
+      alu.alufn_signal = 6b0;
+      alu.a = 16b0000010111110010; //1522
+      alu.b = 16b0001111010001101; //7821
+      //out = 0010 0100 0111 1111 (9343)
+      if (alu.out == 16b0010010001111111){ // assertion set correct value for output of a op b
+          out = {5d10,5d10,5d13,5d30}; //shows Add --> pass case
+          }
+        else {
+          out = {5d14,5d14,5d2,5d30}; //shows Err --> fail case
+          }
+        if(pause == 0){
+          state.d = state.MULTIPLY; // move to next test case
+        }
+    
+      state.MULTIPLY: 
+      alu.alufn_signal = 6b000010;
+      alu.a = 16b0000000000000010; //2 
+      alu.b = 16b0000000000000100; //4
+      //out = 16b0000000000001000 (8)
+      if (alu.out == 16b0000000000001000){ // assertion set correct value for output of a op b
+          out = {5d19,5d19,5d23,5d18}; //shows nnUL --> pass case
+          }
+        else {
+          out = {5d14,5d14,5d2,5d30}; //shows Err --> fail case
+          }
+        if(pause == 0){
+          state.d = state.AND; // move to next test case
+        }
+        
+        state.AND: 
+      alu.alufn_signal = 6b011000;
+      alu.a = 16b0011001001010000; 
+      alu.b = 16b0011000011101100; 
+      //out = 16b0011000001000000
+      if (alu.out == 16b0011000001000000){ // assertion set correct value for output of a op b
+          out = {5d10,5d19,5d30,5d30}; //shows And --> pass case
+          }
+        else {
+          out = {5d14,5d14,5d2,5d30}; //shows Err --> fail case
+          }
+        if(pause == 0){
+          state.d = state.OR; // move to next test case
+        }
+        
+     state.OR: 
+      alu.alufn_signal = 6b011110;
+      alu.a = 16b0011001001010000; 
+      alu.b = 16b0011000011101100; 
+      //out = 16b0011000001000000
+      if (alu.out == 16b0011000001000000){ // assertion set correct value for output of a op b
+          out = {5d10,5d19,5d30,5d30}; //shows And --> pass case
+          }
+        else {
+          out = {5d14,5d14,5d2,5d30}; //shows Err --> fail case
+          }
+        if(pause == 0){
+          state.d = state.SHL; // move to next test case
+        }
+        
+        state.SHL: 
+      alu.alufn_signal = 6b101000;
+      alu.a = 16b0010101001010000; 
+      alu.b = 16b0000000000000100; 
+         //out = 16b1010010100000000;
+      
+      if (alu.out == 16b1010010100000000){ // assertion set correct value for output of a op b
+          out = {5d22,5d17,5d18,5d30}; //shows And --> pass case
+          }
+        else {
+          out = {5d14,5d14,5d2,5d30}; //shows Err --> fail case
+          }
+        if(pause == 0){
+          state.d = state.END; // move to next test case
+        }
+        
+
+        state.END:
+        out = {5d14,5d19,5d13,5d30};
+        alu.a =0;
+        alu.b=0;
+        alu.alufn_signal=0;
+        // at end state use middle button to reset the test from the top
+        if (restart == 1){ 
+          state.d = state.ADD;
+        }
+        
+        default:
+
+        state.d = state.START;
+
+        out = {5d30,5d30,5d30,5d30};
+        alu.a =0;
+        alu.b=0;
+        alu.alufn_signal=0;
+    }
+}
