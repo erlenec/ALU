@@ -26,7 +26,7 @@ module au_top (
       dff ledsA[16];                           //record input A 
       dff ledsB[16];                           //record input B 
       dff store_alufn[6];                      //record alufn signal
-      fsm state = {START, INVALID, MANUAL};
+      fsm state = {START, INVALID, MANUAL};    // all the different states
       multi_seven_seg seg;
       
       //counter ctr(#SIZE(2), #DIV(10));
@@ -80,12 +80,9 @@ module au_top (
     io_led[0][6] = add.v;
   
       
-    case (state.q){                 //initial start state of finite state machine
+    case (state.q){                 //initial start state
      state.START:
-        if(io_button[1] == 1){      //if button is pressed, move to next state
-           state.d = state.INVALID;
-        }
-        
+
         if(io_dip[0][0]){           //if dip switch is up, change from auto testing to manual testing 
             state.d = state.MANUAL;
         }
@@ -95,50 +92,127 @@ module au_top (
     
     
     state.MANUAL:                   //manual test state
-    if(io_dip[0][1]){               //if switch[0][1] is high, switch[1] and switch[2] become inputs for a
+    if(io_dip[0][1]){               //flip up switch[0][1] to set input a
         a[7:0] = io_dip[1];
         a[15:8] = io_dip[2];
-        if(io_button[1]){           //if middle(1) button is pressed, store input a into a d flip flop
+        if(io_button[3]){           //press left(3) button to store input a into a dff
           ledsA.d = a;          
         }
-    } else {                        //if switch[0][1] is low, switch[1] and switch[2] become inputs for b
+    } else {                        //flip down switch[0][1]to set input b
         b[7:0] = io_dip[1];
         b[15:8] = io_dip[2];
-        if(io_button[1]){           //if middle(1) button is pressed, store input b into a d flip flop
+        if(io_button[4]){           //press right(4) button to store input b into a dff
           ledsB.d = b;
         }
       }
 
-      alufn = io_dip[0][7:2];       //assigning dip switches to alufn input
-      if(io_button[3]){             //if left(3) button is pressed, store input alufn into a d flip flip
-        store_alufn.d = alufn;}
+      alufn = io_dip[0][7:2];                       //assign dip switches to alufn input
+      if(io_button[2]){                             //press down(2) button to store input alufn into a dff
+
+        if (io_dip[0][7:2] == b000110){             //invalid alufn
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b001010){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b001110){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b010000){
+          	state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b010001){
+	          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b010010){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b010011){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b010100){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b010101){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b010110){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b010111){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b100000){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b100001){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b100010){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b100011){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b100100){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b100101){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b100110){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b100111){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b101010){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b101101){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b101110){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b101111){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b110000){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b110001){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b110010){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b110011){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b110100){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b110101){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b110110){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b110111){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b111000){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b111001){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b111010){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b111011){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b111100){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b111101){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b111110){
+          state.d =state.INVALID;}
+        else if (io_dip[0][7:2] == b111111){
+          state.d =state.INVALID;}                    // end of invalid alufn
+              
+            
+        else{                                        // store alufn
+          store_alufn.d = alufn;
+        }    
+      }
           
-      if(io_button[4]){             //if right(4) button is pressed, reset a,b,alufn
+      if(io_button[1]){             //press center(1) button to reset a,b,alufn
         ledsA.d = 16b0;
         ledsB.d = 16b0;
         store_alufn.d = 6b0;}
         
-      alumod.a = ledsA.q;         //input stored value of a into module alu
-      alumod.b = ledsB.q;         //input stored value of b into module alu
-      alumod.alufn_signal = store_alufn.q; //input stored value of alufn into module alu
-      alu = alumod.out;             //assigning alu to output of module alu
-      io_led[1] = alu[7:0];         //display alu output on onboard leds
+      alumod.a = ledsA.q;                     //input stored value of a into module alu
+      alumod.b = ledsB.q;                     //input stored value of b into module alu
+      alumod.alufn_signal = store_alufn.q;    //input stored value of alufn into module alu
+      alu = alumod.out;                       //assigning alu to output of module alu
+      io_led[1] = alu[7:0];                   //display alu output on onboard leds
       io_led[2] = alu[15:8];
       io_led[0][0] = 1;
-      io_led[0][7] = alumod.zvn[0];  //z -leftmost
-      io_led[0][6] = alumod.zvn[1];  //v
-      io_led[0][5] = alumod.zvn[2];  //n
-      if(io_button[2]){             //if down(2) button is pressed, return to initial state
+      io_led[0][7] = alumod.zvn[0];          //z -leftmost
+      io_led[0][6] = alumod.zvn[1];          //v
+      io_led[0][5] = alumod.zvn[2];          //n
+      if(io_button[0]){                      //press up(0) button to return to initial state
         state.d = state.START;}
           
-      //invalid ALUFN input
-      //else if(store_alufn.q == b000110||b001010||b001110||b010000||b010001||b010010||b010011||b010100||
-        //b010101||b010110||b010111||b100000||b100001||b100010||b100011||b100100||b100101||b100110||b100111||b101010||
-        //b101101||b101110||b101111||b110000||b110001||b110010||b110011||b110100||b110101||b110110||b110111||b111000||
-        //b111001||b111010||b111011||b111100||b111101||b111110||b111111){
-          //state.d = state.INVALID;}
-     
-        
+
     state.INVALID:   
       alumod.alufn_signal = 000100;  
       seg.values[3] = 5d14; //E 
@@ -148,7 +222,7 @@ module au_top (
       io_seg = ~seg.seg;
       io_sel = ~seg.sel;
         
-      if(io_button[2]){              //if down(2) button is pressed, return to initial state
+      if(io_button[0]){              //press up(0) button to return to initial state
         state.d = state.START;}
         
     //alufn signal invalid
