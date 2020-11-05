@@ -4,9 +4,6 @@ module alu (
     input alufn_signal[6], //alufn 6 bits input
     output out[16], //16 bit output 
     output zvn[3],
-    //output z[1],
-    //output v[1],
-    //output n[1],
     output overflow
   ) {
   
@@ -14,8 +11,7 @@ module alu (
   boolean booleanUnit;
   shifter shifterUnit;
   compare compareUnit; 
-  //multiplier multiplierUnit;
-  
+
   sig z;
   sig v;
   sig n; 
@@ -53,26 +49,20 @@ module alu (
     shifterUnit.a = a;
     shifterUnit.b = b[3:0];
     
-    //multiplierUnit.alufn_signal = alufn_signal;
-    //multiplierUnit.a = a;
-    //multiplierUnit.b = b;
-    
     case(alufn_signal[5:4]){
-      b00 : out = adderUnit.out;
-      b01 : out = booleanUnit.out;
-      b10 : out = shifterUnit.out;
-      b11 : out = compareUnit.cmp;
+      b00 : out = adderUnit.out; //adder
+      b01 : out = booleanUnit.out; //boolean
+      b10 : out = shifterUnit.out; //shifter
+      b11 : out = compareUnit.cmp; //compare
       
       default: out = 16b0;
     }
       
     if (alufn_signal == b000010){
-      out = a*b; // fast multiplier hack
+      out = a*b; //multiplier 
     }
     
-    //else{
-      //out = multiplierUnit.out;
-    
+ 
     
   }
 }
