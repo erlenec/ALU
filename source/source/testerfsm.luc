@@ -1,37 +1,36 @@
 module testerfsm (
     input clk,
     input rst,
-    input pause,
+    input pause, //for user to pause to check output
     input restart,
-    output out[4][5]
+    output out[4][5] //output 4 groups of 5bits to input for multi_seven_seg to display on IO shield
   ) {
 
 
-
-// instantiate the alu to check its output against test case
   const CLKSPEED = 30; // speed of update for 26 is approx 1.34s
   dff counter[CLKSPEED](.clk(clk), .rst(rst)); // create counter as clk
 
 
   alu alu; // instantiate alu for checking logic of program against predefined assertions
   .clk(counter.q[CLKSPEED-1]){ //set fsm speed to counter
-    fsm state(.rst(rst)) = {START, ADD, SUB, AND, NAND, OR, NOR, XOR, XNOR, A, SHL, SHR, SRA, CMPEQ, CMPLT, CMPLE, MULTIPLY, MOD, END}; // create states for testing each of the fsm.
+    //create an fsm for different states
+    fsm state(.rst(rst)) = {START, ADD, SUB, AND, NAND, OR, NOR, XOR, XNOR, A, SHL, SHR, SRA, CMPEQ, CMPLT, CMPLE, MULTIPLY, MOD, END}; // different states in fsm for testing each of the functionalities
   }
 
   always {
     // to increment counter
     counter.d = counter.q + 1;
-    // Test cases
+    
 
     case(state.q){
-      state.START:
-        alu.alufn_signal=0;
-        out = {5d0,5d0,5d0,5d0};
-        alu.a = 16b0;
-        alu.b = 16b0;
+      state.START: //start state
+        alu.alufn_signal=0; //input alufn signal for alu
+        out = {5d0,5d0,5d0,5d0}; //for multi_seven_seg input
+        alu.a = 16b0; //input a for alu
+        alu.b = 16b0; //input b for alu
         
-        if (restart == 1){ 
-          state.d = state.ADD;
+        if (restart == 1){ //io_button[4] (right) 
+          state.d = state.ADD; //restart autotester
         }
           
       state.ADD: 
